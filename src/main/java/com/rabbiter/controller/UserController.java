@@ -50,7 +50,7 @@ public class UserController {
      */
     @GetMapping("/findByNo")
     public Result findByNo(@RequestParam String no){
-        List list = userService.lambdaQuery()
+        List<User> list = userService.lambdaQuery()
                 .eq(User::getNo,no)
                 .list();
         return list.size()>0?Result.success(list):Result.fail();
@@ -84,7 +84,7 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody User user){
         //匹配账号和密码
-        List list = userService.lambdaQuery()
+        List<User> list = userService.lambdaQuery()
                 .eq(User::getNo,user.getNo())
                 .eq(User::getPassword,user.getPassword())
                 .list();
@@ -94,7 +94,7 @@ public class UserController {
             List<Menu> menuList = menuService.lambdaQuery()
                     .like(Menu::getMenuright,user1.getRoleId())
                     .list();
-            HashMap res = new HashMap();
+            HashMap<String, Object> res = new HashMap<String, Object>();
             res.put("user",user1);
             res.put("menu",menuList);
             return Result.success(res);
